@@ -1,804 +1,990 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yoga with Gio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Color scheme based on original website */
-        :root {
-            --primary-color: #a3e4d7; /* Light mint green */
-            --secondary-color: #7986cb; /* Purple blue */
-            --text-color: #333;
-            --light-bg: #f5f5f5;
-            --dark-bg: #424242;
-            --accent-color: #ff9800;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        p {
-            margin-bottom: 1.5rem;
-        }
-        
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        ul, ol {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        a {
-            color: var(--secondary-color);
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Header */
-        header {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            overflow: hidden;
-        }
-        
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-        
-        .header-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            z-index: -1;
-        }
-        
-        .header-content {
-            max-width: 800px;
-            padding: 2rem;
-        }
-        
+      /* Color scheme based on original website */
+      :root {
+        --primary-color: #a3e4d7; /* Light mint green */
+        --secondary-color: #7986cb; /* Purple blue */
+        --text-color: #333;
+        --light-bg: #f5f5f5;
+        --dark-bg: #424242;
+        --accent-color: #ff9800;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      p {
+        margin-bottom: 1.5rem;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      ul,
+      ol {
+        margin-left: 2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      a {
+        color: var(--secondary-color);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* Header */
+      header {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+      }
+
+      .header-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+
+      .header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: -1;
+      }
+
+      .header-content {
+        max-width: 800px;
+        padding: 2rem;
+      }
+
+      .header-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .header-content p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-color);
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 1.5rem;
+      }
+
+      .nav-links a {
+        color: var(--text-color);
+        font-weight: 500;
+      }
+
+      .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+
+      /* Sections */
+      section {
+        padding: 5rem 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2.5rem;
+      }
+
+      /* About Section */
+      .about {
+        background-color: var(--primary-color);
+        color: var(--text-color);
+      }
+
+      .about-content {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .about-image {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .about-text {
+        flex: 2;
+        min-width: 300px;
+      }
+
+      /* Services Sections */
+      .adults,
+      .kids {
+        background-color: var(--light-bg);
+      }
+
+      .retreat,
+      .corporates {
+        background-color: var(--primary-color);
+      }
+
+      .service-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .service-card {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .service-image {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .service-card:hover .service-image img {
+        transform: scale(1.05);
+      }
+
+      .service-content {
+        padding: 1.5rem;
+      }
+
+      .service-content h3 {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Gallery */
+      .gallery {
+        background-color: var(--light-bg);
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .gallery-item {
+        overflow: hidden;
+        border-radius: 8px;
+        height: 250px;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Testimonials */
+      .testimonials {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+
+      .testimonial-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .testimonial {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+      }
+
+      .testimonial-content {
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+
+      .testimonial-author {
+        font-weight: 600;
+      }
+
+      /* Contact */
+      .contact {
+        background-color: var(--dark-bg);
+        color: white;
+        text-align: center;
+      }
+
+      .contact-info {
+        margin-top: 2rem;
+      }
+
+      .contact-info p {
+        margin-bottom: 0.5rem;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .social-links a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: var(--primary-color);
+        color: var(--dark-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .social-links a:hover {
+        background-color: white;
+        transform: translateY(-3px);
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--dark-bg);
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .header-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+          font-size: 2.5rem;
         }
-        
-        .header-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
-        
-        .nav-links a {
-            color: var(--text-color);
-            font-weight: 500;
-        }
-        
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        
-        /* Sections */
-        section {
-            padding: 5rem 2rem;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
+
         .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
+          font-size: 2rem;
         }
-        
-        /* About Section */
-        .about {
-            background-color: var(--primary-color);
-            color: var(--text-color);
+
+        .nav-links {
+          position: fixed;
+          top: 60px;
+          left: 0;
+          width: 100%;
+          background-color: white;
+          flex-direction: column;
+          align-items: center;
+          padding: 1rem 0;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          transform: translateY(-150%);
+          transition: transform 0.3s ease;
         }
-        
+
+        .nav-links.active {
+          transform: translateY(0);
+        }
+
+        .nav-links li {
+          margin: 0.5rem 0;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
         .about-content {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 2rem;
+          flex-direction: column;
         }
-        
-        .about-image {
-            flex: 1;
-            min-width: 300px;
-        }
-        
+
+        .about-image,
         .about-text {
-            flex: 2;
-            min-width: 300px;
+          flex: 1 1 100%;
         }
-        
-        /* Services Sections */
-        .adults, .kids {
-            background-color: var(--light-bg);
-        }
-        
-        .retreat, .corporates {
-            background-color: var(--primary-color);
-        }
-        
-        .service-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .service-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .service-image {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .service-card:hover .service-image img {
-            transform: scale(1.05);
-        }
-        
-        .service-content {
-            padding: 1.5rem;
-        }
-        
-        .service-content h3 {
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Gallery */
-        .gallery {
-            background-color: var(--light-bg);
-        }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        
-        .gallery-item {
-            overflow: hidden;
-            border-radius: 8px;
-            height: 250px;
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        
-        .testimonial-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .testimonial {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-        
-        .testimonial-content {
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-        
-        .testimonial-author {
-            font-weight: 600;
-        }
-        
-        /* Contact */
-        .contact {
-            background-color: var(--dark-bg);
-            color: white;
-            text-align: center;
-        }
-        
-        .contact-info {
-            margin-top: 2rem;
-        }
-        
-        .contact-info p {
-            margin-bottom: 0.5rem;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-color);
-            color: var(--dark-bg);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: white;
-            transform: translateY(-3px);
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark-bg);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                flex-direction: column;
-                align-items: center;
-                padding: 1rem 0;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                transform: translateY(-150%);
-                transition: transform 0.3s ease;
-            }
-            
-            .nav-links.active {
-                transform: translateY(0);
-            }
-            
-            .nav-links li {
-                margin: 0.5rem 0;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .about-image, .about-text {
-                flex: 1 1 100%;
-            }
-        }
-        
-        /* Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      }
+
+      /* Animation */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">Yoga with Gio</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#adults">For Adults</a></li>
-                <li><a href="#kids">For Kids</a></li>
-                <li><a href="#retreat">Retreat</a></li>
-                <li><a href="#corporates">Corporates</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="menu-toggle" id="menuToggle">☰</div>
-        </div>
+      <div class="nav-container">
+        <div class="logo">Yoga with Gio</div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#about">About</a></li>
+          <li><a href="#adults">For Adults</a></li>
+          <li><a href="#kids">For Kids</a></li>
+          <li><a href="#retreat">Retreat</a></li>
+          <li><a href="#corporates">Corporates</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">☰</div>
+      </div>
     </nav>
 
     <!-- Header -->
     <header>
-        <img src="images/hero_banner.jpeg" alt="Yoga with Gio" class="header-bg">
-        <div class="header-overlay"></div>
-        <div class="header-content">
-            <h1>Yoga with Gio</h1>
-            <p>Encouraging and supporting individuals of all ages to achieve their fitness and wellness goals through yoga.</p>
-        </div>
+      <img
+        src="images/hero_banner.jpeg"
+        alt="Yoga with Gio"
+        class="header-bg"
+      />
+      <div class="header-overlay"></div>
+      <div class="header-content">
+        <h1>Yoga with Gio</h1>
+        <p>
+          Encouraging and supporting individuals of all ages to achieve their
+          fitness and wellness goals through yoga.
+        </p>
+      </div>
     </header>
 
     <!-- About Section -->
     <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-image fade-in">
-                    <img src="images/instructor_profile.jpeg" alt="Giovana - Yoga Instructor">
-                </div>
-                <div class="about-text fade-in">
-                    <h2>Hello, I'm Giovana</h2>
-                    <p>A passionate enthusiast yoga instructor helping people to find balance and metal clarity while they experience stress reduction, pain relief, better posture, improved sleep, strength and flexibility.</p>
-                    <p>Embracing yoga was a natural transition for me, especially after becoming a mother of two. My scientific background in Neuroscience gave me a unique understanding about meditation and <em>pranayamas</em> which I passionately share through my sessions.</p>
-                    <p>I'm known for my communicative and friendly nature are shown throughout my sessions infused with energy and joy. In Sydney, I offer yoga classes for both adults and kids and I organise enriching workshops and retreats.</p>
-                    <p>Join me on this journey to balance and happiness through yoga!</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="about-content">
+          <div class="about-image fade-in">
+            <img
+              src="images/instructor_profile.jpeg"
+              alt="Giovana - Yoga Instructor"
+            />
+          </div>
+          <div class="about-text fade-in">
+            <h2>Hello, I'm Giovana</h2>
+            <p>
+              A passionate enthusiast yoga instructor helping people to find
+              balance and metal clarity while they experience stress reduction,
+              pain relief, better posture, improved sleep, strength and
+              flexibility.
+            </p>
+            <p>
+              Embracing yoga was a natural transition for me, especially after
+              becoming a mother of two. My scientific background in Neuroscience
+              gave me a unique understanding about meditation and
+              <em>pranayamas</em> which I passionately share through my
+              sessions.
+            </p>
+            <p>
+              I'm known for my communicative and friendly nature are shown
+              throughout my sessions infused with energy and joy. In Sydney, I
+              offer yoga classes for both adults and kids and I organise
+              enriching workshops and retreats.
+            </p>
+            <p>
+              Join me on this journey to balance and happiness through yoga!
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- For Adults Section -->
     <section id="adults" class="adults">
-        <div class="container">
-            <h2 class="section-title fade-in">For Adults</h2>
-            <div class="fade-in">
-                <p>Are you experiencing back pain, feeling less flexible and mobile, and looking to enhance your strength and balance? Consider exploring one of our yoga sessions for free?</p>
-                <p>Whether you're a seasoned yogi or a complete beginner, our classes offer a special approach to wellness through Vinyasa, Yoga Flow, and Restorative styles.</p>
-            </div>
-            
-            <h3 class="fade-in">Choose Your Class Format:</h3>
-            
-            <div class="service-cards">
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/adults_studio_yoga.jpeg" alt="In-Person Yoga Sessions">
-                    </div>
-                    <div class="service-content">
-                        <h3>In-Person Sessions</h3>
-                        <p>Join us in the heart of Sydney for in-person yoga sessions. Experience the benefits of practicing in a dedicated space with like-minded individuals. Studio in Brighton-Le-Sands.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/adults_indoor_yoga.jpeg" alt="Online Yoga Sessions">
-                    </div>
-                    <div class="service-content">
-                        <h3>Online via Zoom</h3>
-                        <p>Can't make it to our physical location today? No problem! We offer virtual yoga classes via Zoom, allowing you to participate from anywhere you have an internet connection. All classes are recorded and you will have full access if you miss it.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/adults_outdoor_yoga.jpeg" alt="Outdoor Yoga Sessions">
-                    </div>
-                    <div class="service-content">
-                        <h3>Outdoor Sessions</h3>
-                        <p>Experience the joy of yoga in nature with our outdoor sessions. Connect with the elements and enhance your practice in beautiful Sydney locations.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center fade-in" style="text-align: center; margin-top: 2rem;">
-                <h3>Ask for your membership pass today!</h3>
-            </div>
+      <div class="container">
+        <h2 class="section-title fade-in">For Adults</h2>
+        <div class="fade-in">
+          <p>
+            Are you experiencing back pain, feeling less flexible and mobile,
+            and looking to enhance your strength and balance? Consider exploring
+            one of our yoga sessions for free?
+          </p>
+          <p>
+            Whether you're a seasoned yogi or a complete beginner, our classes
+            offer a special approach to wellness through Vinyasa, Yoga Flow, and
+            Restorative styles.
+          </p>
         </div>
+
+        <h3 class="fade-in">Choose Your Class Format:</h3>
+
+        <div class="service-cards">
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/adults_studio_yoga.jpeg"
+                alt="In-Person Yoga Sessions"
+              />
+            </div>
+            <div class="service-content">
+              <h3>In-Person Sessions</h3>
+              <p>
+                Join us in the heart of Sydney for in-person yoga sessions.
+                Experience the benefits of practicing in a dedicated space with
+                like-minded individuals. Studio in Brighton-Le-Sands.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/adults_indoor_yoga.jpeg"
+                alt="Online Yoga Sessions"
+              />
+            </div>
+            <div class="service-content">
+              <h3>Online via Zoom</h3>
+              <p>
+                Can't make it to our physical location today? No problem! We
+                offer virtual yoga classes via Zoom, allowing you to participate
+                from anywhere you have an internet connection. All classes are
+                recorded and you will have full access if you miss it.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/adults_outdoor_yoga.jpeg"
+                alt="Outdoor Yoga Sessions"
+              />
+            </div>
+            <div class="service-content">
+              <h3>Outdoor Sessions</h3>
+              <p>
+                Experience the joy of yoga in nature with our outdoor sessions.
+                Connect with the elements and enhance your practice in beautiful
+                Sydney locations.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="text-center fade-in"
+          style="text-align: center; margin-top: 2rem"
+        >
+          <h3>Ask for your membership pass today!</h3>
+        </div>
+      </div>
     </section>
 
     <!-- For Kids Section -->
     <section id="kids" class="kids">
-        <div class="container">
-            <h2 class="section-title fade-in">For Kids</h2>
-            <div class="fade-in">
-                <p>Bring YOGA at your educational center!!</p>
-                <p>Our unique approach incorporates storytelling, themed sessions, and music in every class. Children engage in positive affirmations and learn the art of calming their minds.</p>
-            </div>
-            
-            <div class="service-cards">
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/kids_indoor_yoga.jpeg" alt="Kids Yoga Classes">
-                    </div>
-                    <div class="service-content">
-                        <h3>Yoga and Activities</h3>
-                        <p>For schools, preschools and childcares; baby yoga (1-2 years old) and kids yoga (2-5 years old).</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/kids_workshop.jpeg" alt="Kids Yoga Workshops">
-                    </div>
-                    <div class="service-content">
-                        <h3>School Holidays Workshops</h3>
-                        <p>Special yoga workshops designed for children during school holidays, keeping them active and engaged.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/kids_outdoor_yoga.jpeg" alt="Kids Birthday Parties">
-                    </div>
-                    <div class="service-content">
-                        <h3>Birthday Parties</h3>
-                        <p>We will be happy to entertain your guests with a themed yoga session with lots of surprises, games and stories!</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title fade-in">For Kids</h2>
+        <div class="fade-in">
+          <p>Bring YOGA at your educational center!!</p>
+          <p>
+            Our unique approach incorporates storytelling, themed sessions, and
+            music in every class. Children engage in positive affirmations and
+            learn the art of calming their minds.
+          </p>
         </div>
+
+        <div class="service-cards">
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img src="images/kids_indoor_yoga.jpeg" alt="Kids Yoga Classes" />
+            </div>
+            <div class="service-content">
+              <h3>Yoga and Activities</h3>
+              <p>
+                For schools, preschools and childcares; baby yoga (1-2 years
+                old) and kids yoga (2-5 years old).
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img src="images/kids_workshop.jpeg" alt="Kids Yoga Workshops" />
+            </div>
+            <div class="service-content">
+              <h3>School Holidays Workshops</h3>
+              <p>
+                Special yoga workshops designed for children during school
+                holidays, keeping them active and engaged.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/kids_outdoor_yoga.jpeg"
+                alt="Kids Birthday Parties"
+              />
+            </div>
+            <div class="service-content">
+              <h3>Birthday Parties</h3>
+              <p>
+                We will be happy to entertain your guests with a themed yoga
+                session with lots of surprises, games and stories!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Retreat Section -->
     <section id="retreat" class="retreat">
-        <div class="container">
-            <h2 class="section-title fade-in">Retreat</h2>
-            <div class="fade-in">
-                <h3>Escape to Tranquility: Your Ultimate Wellness Retreat</h3>
-                <p>Welcome to our exclusive wellness retreats, a haven of serenity nestled in the picturesque landscapes of New South Wales. It's time to let go of the daily hustle and immerse yourself in an unforgettable journey of relaxation, rejuvenation, and self-discovery.</p>
-            </div>
-            
-            <h3 class="fade-in">What to Expect:</h3>
-            <p class="fade-in">Our wellness retreats are designed to provide you with a holistic experience that nourishes your body, mind, and soul. Here's a glimpse of what awaits you:</p>
-            
-            <div class="service-cards">
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/retreat_relaxation.jpeg" alt="Relaxation and Reconnection">
-                    </div>
-                    <div class="service-content">
-                        <h3>1. Relaxation and Reconnection</h3>
-                        <p>Leave the stresses of life behind as you enter a world of tranquility. Our retreats offer the perfect escape to unwind, de-stress, and reconnect with your inner self.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/retreat_food.jpeg" alt="Nourishing Food">
-                    </div>
-                    <div class="service-content">
-                        <h3>2. Nourishing Food</h3>
-                        <p>Indulge in delectable, wholesome meals prepared with love and care. Our menu is crafted to not only delight your taste buds but also support your well-being.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/retreat_meditation.jpeg" alt="Massage and Treatments">
-                    </div>
-                    <div class="service-content">
-                        <h3>3. Massage and treatments</h3>
-                        <p>Treat yourself to rejuvenating massages and bodywork sessions that will leave you feeling relaxed and invigorated. Our skilled therapists will help release tension and restore balance.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/retreat_yoga.jpeg" alt="Yoga and Meditation">
-                    </div>
-                    <div class="service-content">
-                        <h3>4. Yoga and Meditation</h3>
-                        <p>Immerse yourself in daily yoga sessions led by experienced instructors. Whether you're a beginner or seasoned yogi, these sessions are tailored to enhance your practice and foster mindfulness.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center fade-in" style="text-align: center; margin-top: 2rem;">
-                <h3>Enquire us for the following Retreat!</h3>
-            </div>
+      <div class="container">
+        <h2 class="section-title fade-in">Retreat</h2>
+        <div class="fade-in">
+          <h3>Escape to Tranquility: Your Ultimate Wellness Retreat</h3>
+          <p>
+            Welcome to our exclusive wellness retreats, a haven of serenity
+            nestled in the picturesque landscapes of New South Wales. It's time
+            to let go of the daily hustle and immerse yourself in an
+            unforgettable journey of relaxation, rejuvenation, and
+            self-discovery.
+          </p>
         </div>
+
+        <h3 class="fade-in">What to Expect:</h3>
+        <p class="fade-in">
+          Our wellness retreats are designed to provide you with a holistic
+          experience that nourishes your body, mind, and soul. Here's a glimpse
+          of what awaits you:
+        </p>
+
+        <div class="service-cards">
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/retreat_relaxation.jpeg"
+                alt="Relaxation and Reconnection"
+              />
+            </div>
+            <div class="service-content">
+              <h3>1. Relaxation and Reconnection</h3>
+              <p>
+                Leave the stresses of life behind as you enter a world of
+                tranquility. Our retreats offer the perfect escape to unwind,
+                de-stress, and reconnect with your inner self.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img src="images/retreat_food.jpeg" alt="Nourishing Food" />
+            </div>
+            <div class="service-content">
+              <h3>2. Nourishing Food</h3>
+              <p>
+                Indulge in delectable, wholesome meals prepared with love and
+                care. Our menu is crafted to not only delight your taste buds
+                but also support your well-being.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/retreat_meditation.jpeg"
+                alt="Massage and Treatments"
+              />
+            </div>
+            <div class="service-content">
+              <h3>3. Massage and treatments</h3>
+              <p>
+                Treat yourself to rejuvenating massages and bodywork sessions
+                that will leave you feeling relaxed and invigorated. Our skilled
+                therapists will help release tension and restore balance.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img src="images/retreat_yoga.jpeg" alt="Yoga and Meditation" />
+            </div>
+            <div class="service-content">
+              <h3>4. Yoga and Meditation</h3>
+              <p>
+                Immerse yourself in daily yoga sessions led by experienced
+                instructors. Whether you're a beginner or seasoned yogi, these
+                sessions are tailored to enhance your practice and foster
+                mindfulness.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="text-center fade-in"
+          style="text-align: center; margin-top: 2rem"
+        >
+          <h3>Enquire us for the following Retreat!</h3>
+        </div>
+      </div>
     </section>
 
     <!-- Corporates Section -->
     <section id="corporates" class="corporates">
-        <div class="container">
-            <h2 class="section-title fade-in">Corporates</h2>
-            <div class="fade-in">
-                <p>Elevate your company's wellness by bringing yoga directly to your workplace.</p>
-            </div>
-            
-            <div class="service-cards">
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/corporate_outdoor_yoga.jpeg" alt="Corporate Yoga">
-                    </div>
-                    <div class="service-content">
-                        <h3>On-site Yoga</h3>
-                        <p>We travel to you infusing your space with positive energy to motivate and relax your employees.</p>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-image">
-                        <img src="images/corporate_indoor_yoga.jpeg" alt="Workplace Wellness">
-                    </div>
-                    <div class="service-content">
-                        <h3>Workplace Wellness</h3>
-                        <p>Our sessions are crafted to alleviate the discomfort caused by prolonged sitting/standing, providing relief from back pain and incorporating gentle and rejuvenating stretches. Guided breathwork reduces stress and anxiety, infusing your daily work routine with a sense of calmness and bliss.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="fade-in" style="margin-top: 2rem;">
-                <p>Let us transform your employees' day, enhancing their well-being with a mindful workout that improves their overall mood and productivity.</p>
-                <h3 style="text-align: center; margin-top: 1rem;">Ask for a quote today!</h3>
-            </div>
+      <div class="container">
+        <h2 class="section-title fade-in">Corporates</h2>
+        <div class="fade-in">
+          <p>
+            Elevate your company's wellness by bringing yoga directly to your
+            workplace.
+          </p>
         </div>
+
+        <div class="service-cards">
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/corporate_outdoor_yoga.jpeg"
+                alt="Corporate Yoga"
+              />
+            </div>
+            <div class="service-content">
+              <h3>On-site Yoga</h3>
+              <p>
+                We travel to you infusing your space with positive energy to
+                motivate and relax your employees.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card fade-in">
+            <div class="service-image">
+              <img
+                src="images/corporate_indoor_yoga.jpeg"
+                alt="Workplace Wellness"
+              />
+            </div>
+            <div class="service-content">
+              <h3>Workplace Wellness</h3>
+              <p>
+                Our sessions are crafted to alleviate the discomfort caused by
+                prolonged sitting/standing, providing relief from back pain and
+                incorporating gentle and rejuvenating stretches. Guided
+                breathwork reduces stress and anxiety, infusing your daily work
+                routine with a sense of calmness and bliss.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-in" style="margin-top: 2rem">
+          <p>
+            Let us transform your employees' day, enhancing their well-being
+            with a mindful workout that improves their overall mood and
+            productivity.
+          </p>
+          <h3 style="text-align: center; margin-top: 1rem">
+            Ask for a quote today!
+          </h3>
+        </div>
+      </div>
     </section>
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials">
-        <div class="container">
-            <h2 class="section-title fade-in">Testimonials</h2>
-            
-            <div class="testimonial-container">
-                <div class="testimonial fade-in">
-                    <div class="testimonial-content">
-                        <p>"I haven't exercised for years and had this niggling feeling I really need to. I'm in my 40' now and wanted something that took me from Beginner to really fit and healthy without leaving me too exhausted for my daily activities. After a few sessions I can tell you. this is yoga! I feel all the muscles working in my body. I feel my posture already getting better, I feel more energy during my day and as a bonus I get to do the practice with lovely, likeminded women. So, thank you!"</p>
-                    </div>
-                    <div class="testimonial-author">- Teal ELS</div>
-                </div>
-                
-                <div class="testimonial fade-in">
-                    <div class="testimonial-content">
-                        <p>"Thanks for really challenged me. I loved it. Today I did my first inversion in a long time. I got second stage I didn't even try to attempt putting my legs up. All in a good time. Thank you again for bringing the best of me."</p>
-                    </div>
-                    <div class="testimonial-author">- Daniela M.</div>
-                </div>
+      <div class="container">
+        <h2 class="section-title fade-in">Testimonials</h2>
+
+        <div class="testimonial-container">
+          <div class="testimonial fade-in">
+            <div class="testimonial-content">
+              <p>
+                "I haven't exercised for years and had this niggling feeling I
+                really need to. I'm in my 40' now and wanted something that took
+                me from Beginner to really fit and healthy without leaving me
+                too exhausted for my daily activities. After a few sessions I
+                can tell you. this is yoga! I feel all the muscles working in my
+                body. I feel my posture already getting better, I feel more
+                energy during my day and as a bonus I get to do the practice
+                with lovely, likeminded women. So, thank you!"
+              </p>
             </div>
+            <div class="testimonial-author">- Teal ELS</div>
+          </div>
+
+          <div class="testimonial fade-in">
+            <div class="testimonial-content">
+              <p>
+                "Thanks for really challenged me. I loved it. Today I did my
+                first inversion in a long time. I got second stage I didn't even
+                try to attempt putting my legs up. All in a good time. Thank you
+                again for bringing the best of me."
+              </p>
+            </div>
+            <div class="testimonial-author">- Daniela M.</div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Gallery Section -->
     <section id="gallery" class="gallery">
-        <div class="container">
-            <h2 class="section-title fade-in">Gallery</h2>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item fade-in">
-                    <img src="images/gallery_outdoor_session.jpeg" alt="Outdoor Yoga Session">
-                </div>
-                <div class="gallery-item fade-in">
-                    <img src="images/gallery_kids_outdoor.jpeg" alt="Kids Outdoor Yoga">
-                </div>
-                <div class="gallery-item fade-in">
-                    <img src="images/gallery_kids_indoor.jpeg" alt="Kids Indoor Yoga">
-                </div>
-                <div class="gallery-item fade-in">
-                    <img src="images/adults_studio_yoga.jpeg" alt="Adult Studio Yoga">
-                </div>
-                <div class="gallery-item fade-in">
-                    <img src="images/retreat_dining.jpeg" alt="Retreat Dining">
-                </div>
-                <div class="gallery-item fade-in">
-                    <img src="images/kids_workshop.jpeg" alt="Kids Workshop">
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title fade-in">Gallery</h2>
+
+        <div class="gallery-grid">
+          <div class="gallery-item fade-in">
+            <img
+              src="images/gallery_outdoor_session.jpeg"
+              alt="Outdoor Yoga Session"
+            />
+          </div>
+          <div class="gallery-item fade-in">
+            <img
+              src="images/gallery_kids_outdoor.jpeg"
+              alt="Kids Outdoor Yoga"
+            />
+          </div>
+          <div class="gallery-item fade-in">
+            <img src="images/gallery_kids_indoor.jpeg" alt="Kids Indoor Yoga" />
+          </div>
+          <div class="gallery-item fade-in">
+            <img src="images/adults_studio_yoga.jpeg" alt="Adult Studio Yoga" />
+          </div>
+          <div class="gallery-item fade-in">
+            <img src="images/retreat_dining.jpeg" alt="Retreat Dining" />
+          </div>
+          <div class="gallery-item fade-in">
+            <img src="images/kids_workshop.jpeg" alt="Kids Workshop" />
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title fade-in">Contact</h2>
-            
-            <div class="contact-info fade-in">
-                <h3>Yoga with Gio</h3>
-                <p>Giovana Brolese</p>
-                <p>+61 435 383 181</p>
-                <p>jobrolese@gmail.com</p>
-                <p>Yoga for all ages</p>
-                
-                <div class="social-links">
-                    <a href="#" aria-label="Instagram">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-                        </svg>
-                    </a>
-                    <a href="#" aria-label="Email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                        </svg>
-                    </a>
-                    <a href="#" aria-label="Website">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title fade-in">Contact</h2>
+
+        <div class="contact-info fade-in">
+          <h3>Yoga with Gio</h3>
+          <p>Giovana Brolese</p>
+          <p>+61 435 383 181</p>
+          <p>jobrolese@gmail.com</p>
+          <p>Yoga for all ages</p>
+
+          <div class="social-links">
+            <a
+              href="https://www.instagram.com/jobrolese/"
+              aria-label="Instagram"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"
+                />
+              </svg>
+            </a>
+            <a href="mailto:jobrolese@gmail.com" aria-label="Email">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Yoga with Gio. All rights reserved.</p>
+      <p>&copy; 2025 Yoga with Gio. All rights reserved.</p>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            
-            if (menuToggle && navLinks) {
-                menuToggle.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                });
+      // Mobile menu toggle
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        if (menuToggle && navLinks) {
+          menuToggle.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+          });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            if (navLinks.classList.contains("active")) {
+              navLinks.classList.remove("active");
             }
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    if (navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                    }
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 70,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Navbar scroll effect
-            const navbar = document.getElementById('navbar');
-            if (navbar) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 100) {
-                        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-                    } else {
-                        navbar.style.background = 'rgba(255, 255, 255, 0.9)';
-                        navbar.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
-                    }
-                });
+
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 70,
+                behavior: "smooth",
+              });
             }
-            
-            // Fade-in animation on scroll
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            const fadeInOnScroll = function() {
-                fadeElements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 150;
-                    
-                    if (elementTop < window.innerHeight - elementVisible) {
-                        element.classList.add('visible');
-                    }
-                });
-            };
-            
-            // Initial check on load
-            fadeInOnScroll();
-            
-            // Check on scroll
-            window.addEventListener('scroll', fadeInOnScroll);
+          });
         });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById("navbar");
+        if (navbar) {
+          window.addEventListener("scroll", function () {
+            if (window.scrollY > 100) {
+              navbar.style.background = "rgba(255, 255, 255, 0.95)";
+              navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.1)";
+            } else {
+              navbar.style.background = "rgba(255, 255, 255, 0.9)";
+              navbar.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)";
+            }
+          });
+        }
+
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll(".fade-in");
+
+        const fadeInOnScroll = function () {
+          fadeElements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < window.innerHeight - elementVisible) {
+              element.classList.add("visible");
+            }
+          });
+        };
+
+        // Initial check on load
+        fadeInOnScroll();
+
+        // Check on scroll
+        window.addEventListener("scroll", fadeInOnScroll);
+      });
     </script>
-</body>
+  </body>
 </html>
