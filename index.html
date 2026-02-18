@@ -3,80 +3,105 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YogiClub</title>
+    <title>YogiClub — Yoga for All Ages</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* Color scheme based on original website */
       :root {
-        --primary-color: #a3e4d7; /* Light mint green */
-        --secondary-color: #7986cb; /* Purple blue */
-        --text-color: #333;
-        --light-bg: #f5f5f5;
-        --dark-bg: #424242;
-        --accent-color: #ff9800;
+        --primary: #a3e4d7;
+        --primary-dark: #7cc4b5;
+        --primary-light: #d5f5ed;
+        --secondary: #7986cb;
+        --secondary-dark: #5c6bc0;
+        --secondary-light: #c5cae9;
+        --text: #333;
+        --text-light: #666;
+        --light-bg: #f8f9fa;
+        --dark-bg: #2d3436;
+        --accent: #ff9800;
+        --white: #ffffff;
       }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
-        font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: var(--text-color);
+        font-family: "Inter", sans-serif;
+        line-height: 1.7;
+        color: var(--text);
         overflow-x: hidden;
       }
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        margin-bottom: 1rem;
+      h1, h2, h3 {
+        font-family: "Playfair Display", serif;
         font-weight: 600;
       }
 
-      p {
-        margin-bottom: 1.5rem;
+      img { max-width: 100%; height: auto; display: block; }
+
+      /* ── Navigation ── */
+      nav {
+        position: fixed;
+        top: 0; left: 0; width: 100%;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+        z-index: 1000;
+        transition: all 0.3s;
       }
 
-      img {
-        max-width: 100%;
-        height: auto;
-        display: block;
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
       }
 
-      ul,
-      ol {
-        margin-left: 2rem;
-        margin-bottom: 1.5rem;
-      }
-
-      a {
-        color: var(--secondary-color);
+      .logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--secondary);
         text-decoration: none;
+        letter-spacing: -0.5px;
       }
 
-      a:hover {
-        text-decoration: underline;
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 0.3rem;
       }
 
-      /* Header */
+      .nav-links a {
+        color: var(--text);
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        padding: 0.5rem 0.8rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: var(--primary-light);
+        color: var(--text);
+      }
+
+      .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; }
+
+      /* ── Hero ── */
       header {
         position: relative;
         height: 100vh;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         text-align: center;
         color: white;
         overflow: hidden;
@@ -84,336 +109,474 @@
 
       .header-bg {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
         object-fit: cover;
-        z-index: -1;
+        z-index: -2;
       }
 
       .header-overlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(121,134,203,0.6), rgba(163,228,215,0.5));
         z-index: -1;
       }
 
-      .header-content {
-        max-width: 800px;
-        padding: 2rem;
-      }
+      .header-content { max-width: 800px; padding: 2rem; }
 
       .header-content h1 {
-        font-size: 3.5rem;
+        font-size: 4rem;
         margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        letter-spacing: -1px;
       }
 
       .header-content p {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         margin-bottom: 2rem;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        font-weight: 300;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      /* Navigation */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        transition: all 0.3s ease;
+      .header-cta {
+        display: inline-flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
-      .nav-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-family: "Inter", sans-serif;
       }
 
-      .logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-color);
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        text-decoration: none;
       }
 
-      .nav-links {
-        display: flex;
-        list-style: none;
-      }
+      .btn-primary { background: var(--primary); color: var(--text); }
+      .btn-secondary { background: var(--white); color: var(--secondary); }
 
-      .nav-links li {
-        margin-left: 1.5rem;
-      }
+      /* ── Sections ── */
+      section { padding: 6rem 2rem; }
 
-      .nav-links a {
-        color: var(--text-color);
-        font-weight: 500;
-      }
-
-      .menu-toggle {
-        display: none;
-        cursor: pointer;
-        font-size: 1.5rem;
-      }
-
-      /* Sections */
-      section {
-        padding: 5rem 2rem;
-      }
-
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
+      .container { max-width: 1100px; margin: 0 auto; }
 
       .section-title {
         text-align: center;
-        margin-bottom: 3rem;
         font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+        letter-spacing: -0.5px;
       }
 
-      /* About Section */
+      .section-subtitle {
+        text-align: center;
+        color: var(--text-light);
+        font-size: 1.1rem;
+        margin-bottom: 3.5rem;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 300;
+      }
+
+      /* ── About ── */
       .about {
-        background-color: var(--primary-color);
-        color: var(--text-color);
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
       }
 
       .about-content {
         display: flex;
-        flex-wrap: wrap;
         align-items: center;
-        gap: 2rem;
+        gap: 3rem;
+        flex-wrap: wrap;
       }
 
       .about-image {
         flex: 1;
-        min-width: 300px;
+        min-width: 280px;
+      }
+
+      .about-image img {
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.12);
       }
 
       .about-text {
-        flex: 2;
-        min-width: 300px;
+        flex: 1.5;
+        min-width: 280px;
       }
 
-      /* Services Sections */
-      .adults,
-      .kids {
-        background-color: var(--light-bg);
+      .about-text h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.2rem;
+        color: var(--text);
       }
 
-      .retreat,
-      .corporates {
-        background-color: var(--primary-color);
+      .about-text p {
+        margin-bottom: 1.2rem;
+        font-size: 1.05rem;
+        color: var(--text);
+        line-height: 1.8;
       }
 
+      /* ── Service Cards (shared) ── */
       .service-cards {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
-        margin-top: 2rem;
       }
 
       .service-card {
-        background-color: white;
-        border-radius: 8px;
+        background: var(--white);
+        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        transition: all 0.4s ease;
       }
 
       .service-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12);
       }
 
       .service-image {
-        height: 200px;
+        height: 220px;
         overflow: hidden;
       }
 
       .service-image img {
-        width: 100%;
-        height: 100%;
+        width: 100%; height: 100%;
         object-fit: cover;
-        transition: transform 0.3s ease;
+        transition: transform 0.5s ease;
       }
 
       .service-card:hover .service-image img {
-        transform: scale(1.05);
+        transform: scale(1.08);
       }
 
       .service-content {
-        padding: 1.5rem;
+        padding: 1.8rem;
       }
 
       .service-content h3 {
-        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 0.6rem;
+        color: var(--text);
       }
 
-      /* Gallery */
-      .gallery {
-        background-color: var(--light-bg);
+      .service-content p {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        line-height: 1.7;
       }
 
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1rem;
+      /* ── Kids Section ── */
+      .kids { background: var(--light-bg); }
+
+      /* ── Adults Section ── */
+      .adults { background: var(--white); }
+
+      .format-label {
+        display: inline-block;
+        background: var(--secondary-light);
+        color: var(--secondary-dark);
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
       }
 
-      .gallery-item {
-        overflow: hidden;
-        border-radius: 8px;
-        height: 250px;
+      /* ── Retreat ── */
+      .retreat {
+        background: linear-gradient(135deg, var(--primary-light), var(--primary));
       }
 
-      .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
+      .retreat-intro {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 3rem;
       }
 
-      .gallery-item:hover img {
-        transform: scale(1.05);
+      .retreat-intro h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text);
       }
 
-      /* Testimonials */
+      .retreat-intro p {
+        color: var(--text);
+        font-size: 1.05rem;
+      }
+
+      .retreat-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px; height: 36px;
+        background: var(--primary-dark);
+        color: white;
+        border-radius: 50%;
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+        flex-shrink: 0;
+      }
+
+      .service-content h3 .retreat-number { vertical-align: middle; }
+
+      /* ── Corporates ── */
+      .corporates { background: var(--light-bg); }
+
+      .corp-highlight {
+        background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+        color: white;
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+        margin-top: 2.5rem;
+      }
+
+      .corp-highlight h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .corp-highlight p {
+        font-size: 1.05rem;
+        max-width: 600px;
+        margin: 0 auto 1.5rem;
+        opacity: 0.9;
+      }
+
+      .corp-highlight .btn { background: var(--primary); color: var(--text); }
+
+      /* ── Testimonials ── */
       .testimonials {
-        background-color: var(--secondary-color);
+        background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
         color: white;
       }
 
-      .testimonial-container {
-        max-width: 800px;
+      .testimonials .section-title { color: white; }
+      .testimonials .section-subtitle { color: rgba(255,255,255,0.8); }
+
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 2rem;
+        max-width: 900px;
         margin: 0 auto;
       }
 
       .testimonial {
-        background-color: rgba(255, 255, 255, 0.1);
-        padding: 2rem;
-        border-radius: 8px;
-        margin-bottom: 2rem;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.15);
+        padding: 2.5rem;
+        border-radius: 20px;
+        position: relative;
+      }
+
+      .testimonial::before {
+        content: """;
+        font-family: "Playfair Display", serif;
+        font-size: 5rem;
+        color: rgba(255,255,255,0.2);
+        position: absolute;
+        top: 0.5rem;
+        left: 1.5rem;
+        line-height: 1;
       }
 
       .testimonial-content {
         font-style: italic;
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        font-size: 1rem;
+        line-height: 1.8;
+        position: relative;
+        z-index: 1;
       }
 
       .testimonial-author {
         font-weight: 600;
+        font-size: 0.95rem;
+        opacity: 0.9;
       }
 
-      /* Contact */
+      /* ── Gallery ── */
+      .gallery { background: var(--white); }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+
+      .gallery-item {
+        overflow: hidden;
+        border-radius: 16px;
+        height: 260px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      }
+
+      .gallery-item img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .gallery-item:hover img { transform: scale(1.08); }
+
+      /* ── Contact ── */
       .contact {
-        background-color: var(--dark-bg);
+        background: var(--dark-bg);
         color: white;
         text-align: center;
       }
 
-      .contact-info {
-        margin-top: 2rem;
+      .contact .section-title { color: white; }
+
+      .contact-grid {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-top: 2.5rem;
       }
 
-      .contact-info p {
+      .contact-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 16px;
+        padding: 2rem;
+        min-width: 200px;
+        transition: all 0.3s;
+      }
+
+      .contact-card:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-3px);
+      }
+
+      .contact-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+
+      .contact-card h4 {
+        font-family: "Inter", sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.6;
         margin-bottom: 0.5rem;
       }
+
+      .contact-card p {
+        font-size: 1.05rem;
+        margin-bottom: 0;
+      }
+
+      .contact-card a { color: var(--primary); text-decoration: none; }
+      .contact-card a:hover { text-decoration: underline; }
 
       .social-links {
         display: flex;
         justify-content: center;
         gap: 1rem;
-        margin-top: 1.5rem;
+        margin-top: 2.5rem;
       }
 
-      .social-links a {
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        background-color: var(--primary-color);
+      .social-link {
+        width: 48px; height: 48px;
+        background: var(--primary);
         color: var(--dark-bg);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease;
+        transition: all 0.3s;
+        text-decoration: none;
       }
 
-      .social-links a:hover {
-        background-color: white;
+      .social-link:hover {
+        background: white;
         transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
       }
 
-      /* Footer */
+      /* ── Footer ── */
       footer {
-        background-color: var(--dark-bg);
-        color: white;
+        background: var(--dark-bg);
+        color: rgba(255,255,255,0.5);
         text-align: center;
-        padding: 1rem;
-        font-size: 0.9rem;
+        padding: 1.5rem;
+        font-size: 0.85rem;
+        border-top: 1px solid rgba(255,255,255,0.05);
       }
 
-      /* Responsive */
-      @media (max-width: 768px) {
-        .header-content h1 {
-          font-size: 2.5rem;
-        }
+      /* ── CTA Buttons in sections ── */
+      .section-cta {
+        text-align: center;
+        margin-top: 2.5rem;
+      }
 
-        .section-title {
-          font-size: 2rem;
-        }
+      .section-cta .btn {
+        background: var(--secondary);
+        color: white;
+      }
+
+      .section-cta .btn:hover {
+        background: var(--secondary-dark);
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 768px) {
+        .header-content h1 { font-size: 2.8rem; }
+        .section-title { font-size: 2rem; }
 
         .nav-links {
           position: fixed;
-          top: 60px;
-          left: 0;
-          width: 100%;
-          background-color: white;
+          top: 58px; left: 0; width: 100%;
+          background: white;
           flex-direction: column;
           align-items: center;
           padding: 1rem 0;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          gap: 0;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
           transform: translateY(-150%);
           transition: transform 0.3s ease;
         }
 
-        .nav-links.active {
-          transform: translateY(0);
-        }
+        .nav-links.active { transform: translateY(0); }
+        .menu-toggle { display: block; }
 
-        .nav-links li {
-          margin: 0.5rem 0;
-        }
-
-        .menu-toggle {
-          display: block;
-        }
-
-        .about-content {
-          flex-direction: column;
-        }
-
-        .about-image,
-        .about-text {
-          flex: 1 1 100%;
-        }
+        .about-content { flex-direction: column; }
+        .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        .testimonial-grid { grid-template-columns: 1fr; }
       }
 
-      /* Animation */
+      @media (max-width: 480px) {
+        .gallery-grid { grid-template-columns: 1fr; }
+      }
+
+      /* ── Animations ── */
       .fade-in {
         opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transform: translateY(25px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
       }
 
       .fade-in.visible {
@@ -423,10 +586,11 @@
     </style>
   </head>
   <body>
+
     <!-- Navigation -->
     <nav id="navbar">
       <div class="nav-container">
-        <div class="logo">YogiClub</div>
+        <a href="#" class="logo">YogiClub</a>
         <ul class="nav-links" id="navLinks">
           <li><a href="#about">About</a></li>
           <li><a href="kids.html">For Kids</a></li>
@@ -440,93 +604,58 @@
       </div>
     </nav>
 
-    <!-- Header -->
+    <!-- Hero -->
     <header>
-      <img
-        src="images/hero_banner.jpeg"
-        alt="YogiClub"
-        class="header-bg"
-      />
+      <img src="images/hero_banner.jpeg" alt="YogiClub" class="header-bg" />
       <div class="header-overlay"></div>
       <div class="header-content">
-        <h1>YogiClub</h1>
-        <p>
-          Encouraging and supporting individuals of all ages to achieve their
-          fitness and wellness goals through yoga.
-        </p>
+        <h1 class="fade-in">YogiClub</h1>
+        <p class="fade-in">Encouraging and supporting individuals of all ages to achieve their fitness and wellness goals through yoga.</p>
+        <div class="header-cta fade-in">
+          <a href="#about" class="btn btn-primary">Discover More</a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
       </div>
     </header>
 
-    <!-- About Section -->
+    <!-- About -->
     <section id="about" class="about">
       <div class="container">
         <div class="about-content">
           <div class="about-image fade-in">
-            <img
-              src="images/instructor_profile.jpeg"
-              alt="Giovana - Yoga Instructor"
-            />
+            <img src="images/instructor_profile.jpeg" alt="Giovana - Yoga Instructor" />
           </div>
           <div class="about-text fade-in">
             <h2>Hello, I'm Giovana</h2>
             <p>
-              A passionate enthusiast yoga instructor helping people to find
-              balance and metal clarity while they experience stress reduction,
-              pain relief, better posture, improved sleep, strength and
-              flexibility.
+              A passionate yoga instructor helping people find balance and mental clarity while they experience stress reduction, pain relief, better posture, improved sleep, strength and flexibility.
             </p>
             <p>
-              Embracing yoga was a natural transition for me, especially after
-              becoming a mother of two. My scientific background in Neuroscience
-              gave me a unique understanding about meditation and
-              <em>pranayamas</em> which I passionately share through my
-              sessions.
+              Embracing yoga was a natural transition for me, especially after becoming a mother of two. My scientific background in Neuroscience gave me a unique understanding of meditation and <em>pranayamas</em> which I passionately share through my sessions.
             </p>
             <p>
-              I'm known for my communicative and friendly nature are shown
-              throughout my sessions infused with energy and joy. In Sydney, I
-              offer yoga classes for both adults and kids and I organise
-              enriching workshops and retreats.
+              I'm known for my communicative and friendly nature — my sessions are infused with energy and joy. Based in Sydney, I offer yoga classes for both adults and kids, and I organise enriching workshops and retreats.
             </p>
-            <p>
-              Join me on this journey to balance and happiness through yoga!
-            </p>
+            <p>Join me on this journey to balance and happiness through yoga!</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- For Kids Section -->
+    <!-- For Kids -->
     <section id="kids" class="kids">
       <div class="container">
         <h2 class="section-title fade-in">For Kids</h2>
-        <div class="fade-in">
-          <h3>Yoga for Kids in Childcare & Preschools</h3>
-          <p>
-            Our fun and imaginative kids yoga sessions bring movement,
-            mindfulness, and storytelling into your centre. Through
-            age-appropriate poses, games, and breathwork, children develop
-            balance, coordination, and emotional awareness—all while having a
-            great time! Each class is tailored to support early learning and
-            self-regulation in a playful and nurturing way. Encouraging to be
-            creative and to relax with positive affirmations.
-          </p>
-        </div>
+        <p class="section-subtitle fade-in">Fun, imaginative yoga sessions for childcare centres, preschools & schools</p>
 
         <div class="service-cards">
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/kids-yoga-workshop-2.png"
-                alt="Kids Yoga Classes"
-              />
+              <img src="images/kids-yoga-workshop-2.png" alt="Kids Yoga Classes" />
             </div>
             <div class="service-content">
-              <h3>Yoga and Activities</h3>
-              <p>
-                For schools, preschools and childcares; baby yoga (1-2 years
-                old) and kids yoga (2-5 years old).
-              </p>
+              <h3>Yoga & Activities</h3>
+              <p>For schools, preschools and childcares — baby yoga (1–2 years) and kids yoga (2–6 years). Movement, mindfulness and storytelling in every session.</p>
             </div>
           </div>
 
@@ -536,165 +665,91 @@
             </div>
             <div class="service-content">
               <h3>Why YogiClub?</h3>
-              <p>
-                We believe that the early years are the perfect time to nurture
-                healthy bodies, calm minds, and joyful hearts. Gio, the founder
-                and teacher behind YogiClub, brings a unique blend of expertise
-                in movement, mindfulness, and storytelling—along with years of
-                experience as a yoga instructor and a mum of two. Her passion
-                for children's well-being shines through in every class, where
-                yoga becomes an adventure filled with fun poses, themed stories,
-                breathing exercises, and creative play.
-              </p>
+              <p>Gio brings a unique blend of expertise in movement, mindfulness and storytelling — along with years of experience as a yoga instructor and a mum of two. Every class is an adventure!</p>
             </div>
           </div>
 
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/kids_outdoor_yoga.jpeg"
-                alt="About Our Program"
-              />
+              <img src="images/kids_outdoor_yoga.jpeg" alt="About Our Program" />
             </div>
             <div class="service-content">
-              <h3>About Our Program</h3>
-              <p>
-                YogiClub's program blends beautifully into early childhood
-                education, supporting emotional development, confidence,
-                creativity, and self-regulation. Our 10-week - Term program
-                aligns with NSW school terms and requires no extra planning from
-                educators—we bring everything needed for a joyful and enriching
-                experience that supports the whole child.
-              </p>
+              <h3>10-Week Program</h3>
+              <p>Aligned with NSW school terms, our program supports emotional development, confidence, creativity and self-regulation. We bring everything needed — no extra planning for educators!</p>
             </div>
           </div>
         </div>
 
-        <div class="text-center fade-in" style="text-align: center; margin-top: 2rem">
-          <a href="kids.html" style="display: inline-block; background-color: var(--secondary-color); color: white; padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: all 0.3s ease;">Learn More About Our Kids Program →</a>
+        <div class="section-cta fade-in">
+          <a href="kids.html" class="btn">Explore Our Kids Program →</a>
         </div>
       </div>
     </section>
 
-    <!-- For Adults Section -->
+    <!-- For Adults -->
     <section id="adults" class="adults">
       <div class="container">
         <h2 class="section-title fade-in">For Adults</h2>
-        <div class="fade-in">
-          <p>
-            Are you experiencing back pain, feeling less flexible and mobile,
-            and looking to enhance your strength and balance? Consider exploring
-            one of our yoga sessions for free?
-          </p>
-          <p>
-            Whether you're a seasoned yogi or a complete beginner, our classes
-            offer a special approach to wellness through Vinyasa, Yoga Flow, and
-            Restorative styles.
-          </p>
-        </div>
-
-        <h3 class="fade-in">Choose Your Class Format:</h3>
+        <p class="section-subtitle fade-in">Whether you're a seasoned yogi or a complete beginner, our classes offer a special approach to wellness through Vinyasa, Yoga Flow, and Restorative styles.</p>
 
         <div class="service-cards">
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/adults_studio_yoga.jpeg"
-                alt="In-Person Yoga Sessions"
-              />
+              <img src="images/adults_studio_yoga.jpeg" alt="In-Person Yoga Sessions" />
             </div>
             <div class="service-content">
+              <span class="format-label">🧘 In Studio</span>
               <h3>In-Person Sessions</h3>
-              <p>
-                Join us in the heart of Sydney for in-person yoga sessions.
-                Experience the benefits of practicing in a dedicated space with
-                like-minded individuals. Studio in Brighton-Le-Sands.
-              </p>
+              <p>Join us in the heart of Sydney for in-person yoga sessions. Experience the benefits of practicing in a dedicated space with like-minded individuals. Studio in Brighton-Le-Sands.</p>
             </div>
           </div>
 
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/adults_indoor_yoga.jpeg"
-                alt="Online Yoga Sessions"
-              />
+              <img src="images/adults_indoor_yoga.jpeg" alt="Online Yoga Sessions" />
             </div>
             <div class="service-content">
+              <span class="format-label">💻 Online</span>
               <h3>Online via Zoom</h3>
-              <p>
-                Can't make it to our physical location today? No problem! We
-                offer virtual yoga classes via Zoom, allowing you to participate
-                from anywhere you have an internet connection. All classes are
-                recorded and you will have full access if you miss it.
-              </p>
+              <p>Can't make it to our physical location? No problem! We offer virtual yoga classes via Zoom from anywhere. All classes are recorded and you'll have full access if you miss it.</p>
             </div>
           </div>
 
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/adults_outdoor_yoga.jpeg"
-                alt="Outdoor Yoga Sessions"
-              />
+              <img src="images/adults_outdoor_yoga.jpeg" alt="Outdoor Yoga Sessions" />
             </div>
             <div class="service-content">
+              <span class="format-label">🌿 Outdoor</span>
               <h3>Outdoor Sessions</h3>
-              <p>
-                Experience the joy of yoga in nature with our outdoor sessions.
-                Connect with the elements and enhance your practice in beautiful
-                Sydney locations.
-              </p>
+              <p>Experience the joy of yoga in nature with our outdoor sessions. Connect with the elements and enhance your practice in beautiful Sydney locations.</p>
             </div>
           </div>
         </div>
 
-        <div
-          class="text-center fade-in"
-          style="text-align: center; margin-top: 2rem"
-        >
-          <h3>Ask for your membership pass today!</h3>
+        <div class="section-cta fade-in">
+          <a href="#contact" class="btn">Ask for Your Membership Pass →</a>
         </div>
       </div>
     </section>
 
-    <!-- Retreat Section -->
+    <!-- Retreat -->
     <section id="retreat" class="retreat">
       <div class="container">
         <h2 class="section-title fade-in">Retreat</h2>
-        <div class="fade-in">
-          <h3>Escape to Tranquility: Your Ultimate Wellness Retreat</h3>
-          <p>
-            Welcome to our exclusive wellness retreats, a haven of serenity
-            nestled in the picturesque landscapes of New South Wales. It's time
-            to let go of the daily hustle and immerse yourself in an
-            unforgettable journey of relaxation, rejuvenation, and
-            self-discovery.
-          </p>
+        <div class="retreat-intro fade-in">
+          <h3>Escape to Tranquility</h3>
+          <p>Welcome to our exclusive wellness retreats — a haven of serenity nestled in the picturesque landscapes of New South Wales. Let go of the daily hustle and immerse yourself in an unforgettable journey of relaxation, rejuvenation, and self-discovery.</p>
         </div>
-
-        <h3 class="fade-in">What to Expect:</h3>
-        <p class="fade-in">
-          Our wellness retreats are designed to provide you with a holistic
-          experience that nourishes your body, mind, and soul. Here's a glimpse
-          of what awaits you:
-        </p>
 
         <div class="service-cards">
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/retreat_relaxation.jpeg"
-                alt="Relaxation and Reconnection"
-              />
+              <img src="images/retreat_relaxation.jpeg" alt="Relaxation and Reconnection" />
             </div>
             <div class="service-content">
-              <h3>1. Relaxation and Reconnection</h3>
-              <p>
-                Leave the stresses of life behind as you enter a world of
-                tranquility. Our retreats offer the perfect escape to unwind,
-                de-stress, and reconnect with your inner self.
-              </p>
+              <h3><span class="retreat-number">1</span> Relaxation & Reconnection</h3>
+              <p>Leave the stresses of life behind as you enter a world of tranquility. Our retreats offer the perfect escape to unwind, de-stress, and reconnect with your inner self.</p>
             </div>
           </div>
 
@@ -703,29 +758,18 @@
               <img src="images/retreat_food.jpeg" alt="Nourishing Food" />
             </div>
             <div class="service-content">
-              <h3>2. Nourishing Food</h3>
-              <p>
-                Indulge in delectable, wholesome meals prepared with love and
-                care. Our menu is crafted to not only delight your taste buds
-                but also support your well-being.
-              </p>
+              <h3><span class="retreat-number">2</span> Nourishing Food</h3>
+              <p>Indulge in delectable, wholesome meals prepared with love and care. Our menu is crafted to delight your taste buds and support your well-being.</p>
             </div>
           </div>
 
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/retreat_meditation.jpeg"
-                alt="Massage and Treatments"
-              />
+              <img src="images/retreat_meditation.jpeg" alt="Massage and Treatments" />
             </div>
             <div class="service-content">
-              <h3>3. Massage and treatments</h3>
-              <p>
-                Treat yourself to rejuvenating massages and bodywork sessions
-                that will leave you feeling relaxed and invigorated. Our skilled
-                therapists will help release tension and restore balance.
-              </p>
+              <h3><span class="retreat-number">3</span> Massage & Treatments</h3>
+              <p>Treat yourself to rejuvenating massages and bodywork sessions that leave you feeling relaxed and invigorated. Our skilled therapists will help release tension and restore balance.</p>
             </div>
           </div>
 
@@ -734,141 +778,90 @@
               <img src="images/retreat_yoga.jpeg" alt="Yoga and Meditation" />
             </div>
             <div class="service-content">
-              <h3>4. Yoga and Meditation</h3>
-              <p>
-                Immerse yourself in daily yoga sessions led by experienced
-                instructors. Whether you're a beginner or seasoned yogi, these
-                sessions are tailored to enhance your practice and foster
-                mindfulness.
-              </p>
+              <h3><span class="retreat-number">4</span> Yoga & Meditation</h3>
+              <p>Immerse yourself in daily yoga sessions led by experienced instructors. Whether you're a beginner or seasoned yogi, these sessions are tailored to enhance your practice.</p>
             </div>
           </div>
         </div>
 
-        <div
-          class="text-center fade-in"
-          style="text-align: center; margin-top: 2rem"
-        >
-          <h3>Enquire us for the following Retreat!</h3>
+        <div class="section-cta fade-in">
+          <a href="#contact" class="btn" style="background: var(--primary-dark); color: white;">Enquire About Our Next Retreat →</a>
         </div>
       </div>
     </section>
 
-    <!-- Corporates Section -->
+    <!-- Corporates -->
     <section id="corporates" class="corporates">
       <div class="container">
         <h2 class="section-title fade-in">Corporates</h2>
-        <div class="fade-in">
-          <p>
-            Elevate your company's wellness by bringing yoga directly to your
-            workplace.
-          </p>
-        </div>
+        <p class="section-subtitle fade-in">Elevate your company's wellness by bringing yoga directly to your workplace</p>
 
         <div class="service-cards">
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/corporate_outdoor_yoga.jpeg"
-                alt="Corporate Yoga"
-              />
+              <img src="images/corporate_outdoor_yoga.jpeg" alt="Corporate Yoga" />
             </div>
             <div class="service-content">
               <h3>On-site Yoga</h3>
-              <p>
-                We travel to you infusing your space with positive energy to
-                motivate and relax your employees.
-              </p>
+              <p>We travel to you, infusing your space with positive energy to motivate and relax your employees. Flexible scheduling to fit your team's routine.</p>
             </div>
           </div>
 
           <div class="service-card fade-in">
             <div class="service-image">
-              <img
-                src="images/corporate_indoor_yoga.jpeg"
-                alt="Workplace Wellness"
-              />
+              <img src="images/corporate_indoor_yoga.jpeg" alt="Workplace Wellness" />
             </div>
             <div class="service-content">
               <h3>Workplace Wellness</h3>
-              <p>
-                Our sessions are crafted to alleviate the discomfort caused by
-                prolonged sitting/standing, providing relief from back pain and
-                incorporating gentle and rejuvenating stretches. Guided
-                breathwork reduces stress and anxiety, infusing your daily work
-                routine with a sense of calmness and bliss.
-              </p>
+              <p>Sessions crafted to alleviate discomfort from prolonged sitting/standing, providing relief from back pain with gentle stretches. Guided breathwork reduces stress and infuses your routine with calmness.</p>
             </div>
           </div>
         </div>
 
-        <div class="fade-in" style="margin-top: 2rem">
-          <p>
-            Let us transform your employees' day, enhancing their well-being
-            with a mindful workout that improves their overall mood and
-            productivity.
-          </p>
-          <h3 style="text-align: center; margin-top: 1rem">
-            Ask for a quote today!
-          </h3>
+        <div class="corp-highlight fade-in">
+          <h3>Transform Your Team's Wellbeing</h3>
+          <p>Enhance your employees' mood, productivity and overall well-being with mindful movement sessions tailored to your workplace.</p>
+          <a href="#contact" class="btn">Ask for a Quote →</a>
         </div>
       </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials -->
     <section id="testimonials" class="testimonials">
       <div class="container">
-        <h2 class="section-title fade-in">Testimonials</h2>
+        <h2 class="section-title fade-in">What People Say</h2>
+        <p class="section-subtitle fade-in">Real stories from our community</p>
 
-        <div class="testimonial-container">
+        <div class="testimonial-grid">
           <div class="testimonial fade-in">
             <div class="testimonial-content">
-              <p>
-                "I haven't exercised for years and had this niggling feeling I
-                really need to. I'm in my 40' now and wanted something that took
-                me from Beginner to really fit and healthy without leaving me
-                too exhausted for my daily activities. After a few sessions I
-                can tell you. this is yoga! I feel all the muscles working in my
-                body. I feel my posture already getting better, I feel more
-                energy during my day and as a bonus I get to do the practice
-                with lovely, likeminded women. So, thank you!"
-              </p>
+              <p>"I haven't exercised for years and had this niggling feeling I really need to. I'm in my 40s now and wanted something that took me from beginner to really fit and healthy without leaving me too exhausted. After a few sessions I can tell you — this is yoga! I feel all the muscles working, my posture getting better, more energy during my day, and as a bonus I get to practice with lovely, likeminded women. Thank you!"</p>
             </div>
-            <div class="testimonial-author">- Teal ELS</div>
+            <div class="testimonial-author">— Teal ELS</div>
           </div>
 
           <div class="testimonial fade-in">
             <div class="testimonial-content">
-              <p>
-                "Thanks for really challenged me. I loved it. Today I did my
-                first inversion in a long time. I got second stage I didn't even
-                try to attempt putting my legs up. All in a good time. Thank you
-                again for bringing the best of me."
-              </p>
+              <p>"Thanks for really challenging me. I loved it. Today I did my first inversion in a long time. I got to second stage — I didn't even try to attempt putting my legs up. All in good time. Thank you again for bringing the best of me."</p>
             </div>
-            <div class="testimonial-author">- Daniela M.</div>
+            <div class="testimonial-author">— Daniela M.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery -->
     <section id="gallery" class="gallery">
       <div class="container">
         <h2 class="section-title fade-in">Gallery</h2>
+        <p class="section-subtitle fade-in">Moments from our sessions, retreats and workshops</p>
 
         <div class="gallery-grid">
           <div class="gallery-item fade-in">
-            <img
-              src="images/gallery_outdoor_session.jpeg"
-              alt="Outdoor Yoga Session"
-            />
+            <img src="images/gallery_outdoor_session.jpeg" alt="Outdoor Yoga Session" />
           </div>
           <div class="gallery-item fade-in">
-            <img
-              src="images/gallery_kids_outdoor.jpeg"
-              alt="Kids Outdoor Yoga"
-            />
+            <img src="images/gallery_kids_outdoor.jpeg" alt="Kids Outdoor Yoga" />
           </div>
           <div class="gallery-item fade-in">
             <img src="images/gallery_kids_indoor.jpeg" alt="Kids Indoor Yoga" />
@@ -886,49 +879,41 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section id="contact" class="contact">
       <div class="container">
-        <h2 class="section-title fade-in">Contact</h2>
+        <h2 class="section-title fade-in">Get in Touch</h2>
+        <p class="section-subtitle fade-in" style="color: rgba(255,255,255,0.7);">Ready to start your yoga journey? We'd love to hear from you.</p>
 
-        <div class="contact-info fade-in">
-          <h3>YogiClub</h3>
-          <p>Giovana Brolese</p>
-          <p>+61 435 383 181</p>
-          <p>jobrolese@gmail.com</p>
-          <p>Yoga for all ages</p>
-
-          <div class="social-links">
-            <a
-              href="https://www.instagram.com/jobrolese/"
-              aria-label="Instagram"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"
-                />
-              </svg>
-            </a>
-            <a href="mailto:jobrolese@gmail.com" aria-label="Email">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
-                />
-              </svg>
-            </a>
+        <div class="contact-grid fade-in">
+          <div class="contact-card">
+            <div class="contact-icon">👤</div>
+            <h4>Instructor</h4>
+            <p>Giovana Brolese</p>
           </div>
+          <div class="contact-card">
+            <div class="contact-icon">📞</div>
+            <h4>Phone</h4>
+            <p><a href="tel:+61435383181">+61 435 383 181</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">✉️</div>
+            <h4>Email</h4>
+            <p><a href="mailto:jobrolese@gmail.com">jobrolese@gmail.com</a></p>
+          </div>
+        </div>
+
+        <div class="social-links fade-in">
+          <a href="https://www.instagram.com/jobrolese/" aria-label="Instagram" class="social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+            </svg>
+          </a>
+          <a href="mailto:jobrolese@gmail.com" aria-label="Email" class="social-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -939,72 +924,41 @@
     </footer>
 
     <script>
-      // Mobile menu toggle
       document.addEventListener("DOMContentLoaded", function () {
         const menuToggle = document.getElementById("menuToggle");
         const navLinks = document.getElementById("navLinks");
 
         if (menuToggle && navLinks) {
-          menuToggle.addEventListener("click", function () {
-            navLinks.classList.toggle("active");
-          });
+          menuToggle.addEventListener("click", () => navLinks.classList.toggle("active"));
         }
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener("click", function (e) {
             e.preventDefault();
-
-            if (navLinks.classList.contains("active")) {
-              navLinks.classList.remove("active");
-            }
-
-            const targetId = this.getAttribute("href");
-            if (targetId === "#") return;
-
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-              window.scrollTo({
-                top: targetElement.offsetTop - 70,
-                behavior: "smooth",
-              });
-            }
+            if (navLinks.classList.contains("active")) navLinks.classList.remove("active");
+            const id = this.getAttribute("href");
+            if (id === "#") return;
+            const el = document.querySelector(id);
+            if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" });
           });
         });
 
-        // Navbar scroll effect
+        // Navbar scroll
         const navbar = document.getElementById("navbar");
-        if (navbar) {
-          window.addEventListener("scroll", function () {
-            if (window.scrollY > 100) {
-              navbar.style.background = "rgba(255, 255, 255, 0.95)";
-              navbar.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.1)";
-            } else {
-              navbar.style.background = "rgba(255, 255, 255, 0.9)";
-              navbar.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)";
-            }
-          });
-        }
+        window.addEventListener("scroll", () => {
+          navbar.style.boxShadow = window.scrollY > 100
+            ? "0 2px 20px rgba(0,0,0,0.1)"
+            : "0 1px 20px rgba(0,0,0,0.06)";
+        });
 
-        // Fade-in animation on scroll
-        const fadeElements = document.querySelectorAll(".fade-in");
-
-        const fadeInOnScroll = function () {
-          fadeElements.forEach((element) => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementVisible = 150;
-
-            if (elementTop < window.innerHeight - elementVisible) {
-              element.classList.add("visible");
-            }
-          });
-        };
-
-        // Initial check on load
-        fadeInOnScroll();
-
-        // Check on scroll
-        window.addEventListener("scroll", fadeInOnScroll);
+        // Fade-in on scroll
+        const fadeEls = document.querySelectorAll(".fade-in");
+        const check = () => fadeEls.forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight - 120) el.classList.add("visible");
+        });
+        check();
+        window.addEventListener("scroll", check);
       });
     </script>
   </body>
